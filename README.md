@@ -15,5 +15,6 @@ How to run -
 1. git clone https://github.com/parc314/youtubeAPITest.git
 2. cd youtubeAPITest
 3. docker-compose down --rm all
-4. docker-compose up  
-5. Verify by using the get endpoint
+4. docker-compose up
+5. Server is listening at port 5000
+6. Verify by using the get endpoint
