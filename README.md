@@ -13,6 +13,7 @@ You will need docker compose to run the service
 
 How to run -
 1. git clone https://github.com/parc314/youtubeAPITest.git
-2. docker-compose down --rm all
-3. docker-compose up  
-4. Verify by using the get endpoint
+2. cd youtubeAPITest
+3. docker-compose down --rm all
+4. docker-compose up  
+5. Verify by using the get endpoint
