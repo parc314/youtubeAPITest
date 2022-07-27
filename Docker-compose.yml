@@ -8,8 +8,6 @@ services:
       - ${PORT}:${PORT}
     depends_on:
       - db
-    volumes:
-    - .:/usr/src/app
 
   db:
     container_name: postgres
