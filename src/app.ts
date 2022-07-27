@@ -77,11 +77,13 @@ app.get("/get/video", async (req: Request, res: Response, next: NextFunction) =>
 });
 
 
+let apiKeys = process.env.API_KEY?.split(" ")
+let apiKeyIndex = 0;
 const searchVideos = async () => {
   try {
-    let res = await axios.get(`https://www.googleapis.com/youtube/v3/search?order=date&type=video&key=AIzaSyDDMG7LP9TGLYzqLwFeF7_fWk1jAyUeV9o&publishedAfter=${moment().format("YYYY-MM-DD[T]HH:mm[:00Z]")}&q=cricket&part=snippet`)
+    let res = await axios.get(`https://www.googleapis.com/youtube/v3/search?order=date&type=video&key=${apiKeys?.[apiKeyIndex]}&publishedAfter=${moment().format("YYYY-MM-DD[T]HH:mm[:00Z]")}&q=cricket&part=snippet`)
     let publishedAt = '', title = '', description = '', thumbnails = '';
-
+    console.log(res.data.items)
     for (let item of res.data.items) {
       publishedAt = item.snippet.publishedAt;
       title = item.snippet.title;
@@ -103,6 +105,7 @@ const searchVideos = async () => {
     }
   } catch (err) {
     console.log(err);
+    apiKeyIndex++;
   }
 };
 const job = nodeCron.schedule("*/10 * * * * *", searchVideos);
@@ -110,4 +113,3 @@ const job = nodeCron.schedule("*/10 * * * * *", searchVideos);
 app.listen(process.env.PORT, () => {
   console.log(`Server is running at ${process.env.PORT}`);
 });
-
