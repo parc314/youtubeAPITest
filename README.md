@@ -15,3 +15,4 @@ How to run -
 1. git clone https://github.com/parc314/youtubeAPITest.git
 2. docker-compose down --rm all
 3. docker-compose up  
+4. Verify by using the get endpoint
