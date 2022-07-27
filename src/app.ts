@@ -28,6 +28,7 @@ CREATE TABLE videos (
 );
 `;
 
+// connect to database and create table
 const connectToDB = async () => {
   try {
     await client.connect();
@@ -40,7 +41,7 @@ const connectToDB = async () => {
 connectToDB();
 
 
-
+// get all videos. Sample endpoint - http://localhost:5000/get/videos?pageNumber=2&pageSize=20
 app.get("/get/videos", async (req: Request, res: Response, next: NextFunction) => {
     const pageNumber = req.query.pageNumber || 1;
     const pageSize = req.query.pageSize || 10;
@@ -63,6 +64,7 @@ app.get("/get/videos", async (req: Request, res: Response, next: NextFunction) =
     }
 });
 
+// get a video with title and description in request. Make sure the url is encoded
 app.get("/get/video", async (req: Request, res: Response, next: NextFunction) => {
   const getVideoWithParam = `
   SELECT *
@@ -79,6 +81,8 @@ app.get("/get/video", async (req: Request, res: Response, next: NextFunction) =>
 
 let apiKeys = process.env.API_KEY?.split(" ")
 let apiKeyIndex = 0;
+
+// fetch video using youtube api and insert into our table
 const searchVideos = async () => {
   try {
     let res = await axios.get(`https://www.googleapis.com/youtube/v3/search?order=date&type=video&key=${apiKeys?.[apiKeyIndex]}&publishedAfter=${moment().subtract(6, 'h').format("YYYY-MM-DD[T]HH:mm[:00Z]")}&q=cricket&part=snippet`)
@@ -108,6 +112,8 @@ const searchVideos = async () => {
     apiKeyIndex++;
   }
 };
+
+// cron job which calls the searchVideos function every 10 sec
 const job = nodeCron.schedule("*/10 * * * * *", searchVideos);
 
 app.listen(process.env.PORT, () => {
