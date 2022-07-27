@@ -109,7 +109,7 @@ const searchVideos = async () => {
     }
   } catch (err) {
     console.log(err);
-    apiKeyIndex++;
+    apiKeyIndex++; // move to next api key
   }
 };
 
