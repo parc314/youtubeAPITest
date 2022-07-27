@@ -81,7 +81,7 @@ let apiKeys = process.env.API_KEY?.split(" ")
 let apiKeyIndex = 0;
 const searchVideos = async () => {
   try {
-    let res = await axios.get(`https://www.googleapis.com/youtube/v3/search?order=date&type=video&key=${apiKeys?.[apiKeyIndex]}&publishedAfter=${moment().format("YYYY-MM-DD[T]HH:mm[:00Z]")}&q=cricket&part=snippet`)
+    let res = await axios.get(`https://www.googleapis.com/youtube/v3/search?order=date&type=video&key=${apiKeys?.[apiKeyIndex]}&publishedAfter=${moment().subtract(6, 'h').format("YYYY-MM-DD[T]HH:mm[:00Z]")}&q=cricket&part=snippet`)
     let publishedAt = '', title = '', description = '', thumbnails = '';
     console.log(res.data.items)
     for (let item of res.data.items) {
